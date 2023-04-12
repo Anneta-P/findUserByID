@@ -29,31 +29,30 @@ const DB = {
 };
 
 const findUserById = id => {
-  return {};
+  const user = DB.users.find(user => user.id === id);
+
+  if (!user) {
+    return 'Not Found';
+  }
+
+  const level = DB.levels.find(level => level.id === user.levelId);
+
+  const skills = user.skills.map(skillId => {
+    return DB.skills.find(skill => skill.id === skillId).name;
+  });
+
+  return {
+    name: user.name,
+    position: level.name,
+    skills: skills,
+  };
 };
 
 const oleg = findUserById('2');
 console.log(oleg);
-/*
-{
-	name: 'Oleg',
-	position: 'junior',
-	skills: ['html/css', 'js'],
-}
-*/
 
 const andriy = findUserById('1');
 console.log(andriy);
-/*
-{
-    name: 'Andriy Petrash',
-	  position: 'senior',
-	  skills: ['html/css', 'js', 'nodejs', 'react', 'TypeScript'],
-}
-*/
 
 const notFoundUser = findUserById('33');
 console.log(notFoundUser);
-/*
-"Not Found"
-*/
